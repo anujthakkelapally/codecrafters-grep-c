@@ -24,6 +24,18 @@ bool match_pattern(const char* input_line, const char* pattern) {
         }
         return false;
     }
+    else if (pattern[0] == '[') {
+        int index = 1;
+        while (pattern[index] != ']') {
+            for (int i = 0; input_line[i] != '\0'; i++) {
+                if (input_line[i] == pattern[index]) {
+                    return true;
+                }
+            }
+            index += 1;
+        }
+        return false;
+    }
     else {
         fprintf(stderr, "Unhandled pattern %s\n", pattern);
         exit(1);
