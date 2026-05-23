@@ -24,7 +24,7 @@ bool match_pattern(const char* input_line, const char* pattern) {
         }
         return false;
     }
-    else if (pattern[0] == '[') {
+    else if ((pattern[0] == '[') && (pattern[1] != '^')) {
         int index = 1;
         while (pattern[index] != ']') {
             for (int i = 0; input_line[i] != '\0'; i++) {
@@ -34,6 +34,21 @@ bool match_pattern(const char* input_line, const char* pattern) {
             }
             index += 1;
         }
+        return false;
+    }
+    else if ((pattern[0] == '[') && (pattern[1] == '^')) {
+        for (int input_index = 0; input_line[input_index] != '\0'; input_index++) {
+            bool unmatched = true;
+            for (int pattern_index = 2; pattern[pattern_index] != '\0'; pattern_index++) {
+                if (input_line[input_index] == pattern[pattern_index]) {
+                    unmatched = false;
+                }
+            }
+            if (unmatched) {
+                return true;
+            }
+        }
+
         return false;
     }
     else {
