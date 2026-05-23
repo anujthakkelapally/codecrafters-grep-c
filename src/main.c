@@ -2,11 +2,21 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <ctype.h>
 
 bool match_pattern(const char* input_line, const char* pattern) {
     if (strlen(pattern) == 1) {
         return strchr(input_line, pattern[0]) != NULL;
-    } else {
+    }
+    else if (strcmp(pattern, "\\d") == 0) {
+        for (int i = 0; input_line[i] != '\0'; i++) {
+            if (isdigit(input_line[i]) != 0) {
+                return true;
+            }
+        }
+        return false;
+    }
+    else {
         fprintf(stderr, "Unhandled pattern %s\n", pattern);
         exit(1);
     }
