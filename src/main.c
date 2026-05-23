@@ -16,6 +16,14 @@ bool match_pattern(const char* input_line, const char* pattern) {
         }
         return false;
     }
+    else if (strcmp(pattern, "\\w") == 0) {
+        for (int i = 0; input_line[i] != '\0'; i++) {
+            if ((isalnum(input_line[i]) != 0) || (input_line[i] == '_')) {
+                return true;
+            }
+        }
+        return false;
+    }
     else {
         fprintf(stderr, "Unhandled pattern %s\n", pattern);
         exit(1);
